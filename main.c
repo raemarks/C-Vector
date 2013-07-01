@@ -22,7 +22,7 @@ int main (void) {
 	addDouble(&m_vector, 10);
 	addDouble(&m_vector, 20);
 
-	shrink_to_fit(&m_vector);
+//	shrink_to_fit(&m_vector);
 
 	for (i = 0; i < m_vector.size; i++) {
 		printf("%lf ",((double *) m_vector.arr)[i]);
