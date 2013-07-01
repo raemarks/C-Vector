@@ -87,7 +87,7 @@ Vector *cpyVector(Vector *vector) {
 }
 
 void addInt(Vector *vector, int n) {
-	if (empty(vector)) {
+	if (vector->capacity == 0) {
 		vector->arr = (int *) calloc (sizeof(int), 1);
 	}
 	if (vector->size == vector->capacity) {
@@ -108,16 +108,19 @@ void addInt(Vector *vector, int n) {
 }
 
 void addDouble(Vector *vector, double d) {
-	if (empty(vector)) {
+	int new;
+	if (vector->capacity == 0) {
 			vector->arr = (double *) calloc (sizeof(double), 1);
 	}
 	if (vector->size == vector->capacity) {
 		if (vector->capacity < 4096) {
-			vector->arr = (double *) realloc ((double *) vector->arr, (vector->size_arr * 2));
+			new = vector->size_arr * 2;
+			printf("current size: %d. reallocating to: %d\n", vector->size_arr, new);
+			vector->arr = realloc (vector->arr, new);
 			vector->size_arr*=2;
 			vector->capacity*=2;
 		} else {
-			vector->arr = (double *) realloc ((double *) vector->arr, vector->size_arr * 1.5);
+			vector->arr = (double *) realloc ((double *) vector->arr, (vector->size_arr) * 1.5);
 			vector->size_arr*=1.5;
 			vector->capacity*=1.5;
 		}
@@ -130,7 +133,7 @@ void addDouble(Vector *vector, double d) {
 }
 
 void addChar(Vector *vector, char c) {
-	if (empty(vector)) {
+	if (vector->capacity == 0) {
 		vector->arr = (char *) calloc (1, 1);
 	}
 
@@ -151,7 +154,7 @@ void addChar(Vector *vector, char c) {
 }
 
 void addUChar(Vector *vector, unsigned char uc) {
-	if (empty(vector)) {
+	if (vector->capacity == 0) {
 		vector->arr = (unsigned char *) calloc (1, 1);
 	}
 	if (vector->size == vector->capacity) {
@@ -172,7 +175,7 @@ void addUChar(Vector *vector, unsigned char uc) {
 }
 
 void addVector(Vector *vector, Vector m_vector) {
-	if (empty(vector)) {
+	if (vector->capacity == 0) {
 		vector->arr = (Vector *) calloc (sizeof(Vector), 1);
 	}
 	if (vector->size == vector->capacity) {
