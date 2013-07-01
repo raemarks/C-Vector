@@ -193,4 +193,9 @@ void remVectorAt(Vector *vector, int i) {
 }
 
 
-
+void shrink_to_fit(Vector *vector) {
+	int data_size = vector->size_arr / vector->size; 
+	vector->size_arr = data_size * vector->size;
+	vector->arr = (void *) realloc(vector->arr, vector->size_arr);
+	vector->capacity = vector->size;
+}
