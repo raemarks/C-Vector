@@ -22,13 +22,13 @@ work just like push_back() in C++. The removeAt functions (remUCharAt, remVector
 in C++ for a single entry. 
 
 Examples:
+
           Vector *i_vector;
           Vector *i_vect = vector("int", 3);
           addInt(i_vect, 1);
           addInt(i_vect, 2);
           addInt(i_vect, 3);
-          addInt(i_vect, 4); //memory is reallocated to capacity of 6 ints
-          
+          addInt(i_vect, 4); //memory is reallocated to capacity of 6 ints          
           printf("%d ", ((int *) i_vector->arr)[i_vector->index]); //output: 4
           remIntAt(i_vect, 2); //removes the 3
           i_vector = cpyVector(i_vect);
