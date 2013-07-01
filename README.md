@@ -17,9 +17,11 @@ initial capacity. For example, type:
 
           Vector c_vector = *vector("char", 6)
 
-cpyVector returns the address of a deep copy of the vector it is passed. The add functions (addChar, addInt, etc)
+cpyVector() returns the address of a deep copy of the vector it is passed. The add functions (addChar, addInt, etc)
 work just like push_back() in C++. The removeAt functions (remUCharAt, remVectorAt, etc) work just like erase()
-in C++ for a single entry. 
+in C++ for a single entry. All functions in vector.h involve heavy typecasting, so the programmer does not have
+to pass in void pointers, which could cause bugs down the road if they accidentally change the values contained
+in those pointers. 
 
 Examples:
 
