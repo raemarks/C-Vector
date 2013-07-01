@@ -108,12 +108,11 @@ void addInt(Vector *vector, int n) {
 }
 
 void addDouble(Vector *vector, double d) {
-	//	if (empty(vector)) {
-	//			vector->arr = (double *) calloc (sizeof(double), 1);
-	//	}
+	if (empty(vector)) {
+			vector->arr = (double *) calloc (sizeof(double), 1);
+	}
 	if (vector->size == vector->capacity) {
 		if (vector->capacity < 4096) {
-			printf("here! adding: %lf, size_arr: %d, capacity: %d\n", d, sizeof(double)*vector->size, vector->capacity);
 			vector->arr = (double *) realloc ((double *) vector->arr, (vector->size_arr * 2));
 			vector->size_arr*=2;
 			vector->capacity*=2;
@@ -122,9 +121,8 @@ void addDouble(Vector *vector, double d) {
 			vector->size_arr*=1.5;
 			vector->capacity*=1.5;
 		}
-		vector->capacity*=2;
 	}
-
+	printf("adding %lf\n", d);
 	((double *) vector->arr)[vector->index] = d;
 	vector->index++;
 	vector->size++;
@@ -134,7 +132,7 @@ void addDouble(Vector *vector, double d) {
 void addChar(Vector *vector, char c) {
 	if (empty(vector)) {
 		vector->arr = (char *) calloc (1, 1);
-	};
+	}
 
 	if (vector->size == vector->capacity) {
 		if (vector->capacity < 4096) {
@@ -150,7 +148,6 @@ void addChar(Vector *vector, char c) {
 	((char *) vector->arr)[vector->index] = c;
 	vector->index++;
 	vector->size++;
-
 }
 
 void addUChar(Vector *vector, unsigned char uc) {
@@ -220,15 +217,14 @@ void remUCharAt(Vector *vector, int i) {
 }
 
 void remVectorAt(Vector *vector, int i) {
-	memcpy (&(((Vector *)vector->arr)[i]), &(((Vector *)vector->arr)[i+1]), (vector->size - i - 1) * sizeof(Vector));
 	free(((Vector *) vector->arr)[i].arr);
+	memcpy (&(((Vector *)vector->arr)[i]), &(((Vector *)vector->arr)[i+1]), (vector->size - i - 1) * sizeof(Vector));
 	vector->size--;
 	vector->index--;
 }
 
-
 void shrink_to_fit(Vector *vector) {
-	int data_size = vector->size_arr / vector->size; 
+	int data_size = vector->size_arr / vector->capacity;
 	vector->size_arr = data_size * vector->size;
 	vector->arr = (void *) realloc(vector->arr, vector->size_arr);
 	vector->capacity = vector->size;
@@ -248,7 +244,7 @@ void clear(Vector *vector) {
 	vector->capacity = 0;
 	vector->size = 0;
 	vector->size_arr = 0;
-	vector->index = -1; //so when the first item is added, index is 0
+	vector->index = 0; //so when the first item is added, index is 0
 }
 
 int empty(Vector *vector) {
