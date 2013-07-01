@@ -46,7 +46,6 @@ Vector *vector(const char *type, int capacity) {
 		printf("invalid type, vector not initialized.\n");
 		return NULL;
 	}	
-	newVector->index = -1; //needed to add the first item
 	return newVector;
 }
 
@@ -89,7 +88,7 @@ Vector *cpyVector(Vector *vector) {
 
 void addInt(Vector *vector, int n) {
 	if (empty(vector)) {
-			vector->arr = (int *) calloc (sizeof(int), 1);
+		vector->arr = (int *) calloc (sizeof(int), 1);
 	}
 	if (vector->size == vector->capacity) {
 		if (vector->capacity < 4096) { 
@@ -109,9 +108,9 @@ void addInt(Vector *vector, int n) {
 }
 
 void addDouble(Vector *vector, double d) {
-//	if (empty(vector)) {
-//			vector->arr = (double *) calloc (sizeof(double), 1);
-//	}
+	//	if (empty(vector)) {
+	//			vector->arr = (double *) calloc (sizeof(double), 1);
+	//	}
 	if (vector->size == vector->capacity) {
 		if (vector->capacity < 4096) {
 			printf("here! adding: %lf, size_arr: %d, capacity: %d\n", d, sizeof(double)*vector->size, vector->capacity);
@@ -121,7 +120,7 @@ void addDouble(Vector *vector, double d) {
 		} else {
 			vector->arr = (double *) realloc ((double *) vector->arr, vector->size_arr * 1.5);
 			vector->size_arr*=1.5;
-			vector->capacity*1.5;
+			vector->capacity*=1.5;
 		}
 		vector->capacity*=2;
 	}
@@ -134,7 +133,7 @@ void addDouble(Vector *vector, double d) {
 
 void addChar(Vector *vector, char c) {
 	if (empty(vector)) {
-			vector->arr = (char *) calloc (1, 1);
+		vector->arr = (char *) calloc (1, 1);
 	};
 
 	if (vector->size == vector->capacity) {
@@ -156,7 +155,7 @@ void addChar(Vector *vector, char c) {
 
 void addUChar(Vector *vector, unsigned char uc) {
 	if (empty(vector)) {
-			vector->arr = (unsigned char *) calloc (1, 1);
+		vector->arr = (unsigned char *) calloc (1, 1);
 	}
 	if (vector->size == vector->capacity) {
 		if (vector->capacity < 4096) {
@@ -177,21 +176,22 @@ void addUChar(Vector *vector, unsigned char uc) {
 
 void addVector(Vector *vector, Vector m_vector) {
 	if (empty(vector)) {
-			vector->arr = (Vector *) calloc (sizeof(Vector), 1);
+		vector->arr = (Vector *) calloc (sizeof(Vector), 1);
 	}
 	if (vector->size == vector->capacity) {
 		if (vector->capacity < 496) {
 			vector->arr = (Vector *) realloc ((Vector *) vector->arr, vector->size_arr * 2);
-			vector->size_arr*2;
-			vector->capacity*2;
+			vector->size_arr*=2;
+			vector->capacity*=2;
 		} else {
 			vector->arr = (Vector *) realloc ((Vector *) vector->arr, vector->size_arr * 1.5);
-			vector->size_arr*1.5;
-			vector->capacity*1.5;
+			vector->size_arr*=1.5;
+			vector->capacity*=1.5;
+		}
+		((Vector *) vector->arr)[vector->index] = m_vector;
+		vector->index++;
+		vector->size++;
 	}
-	((Vector *) vector->arr)[vector->index] = m_vector;
-	vector->index++;
-	vector->size++;
 }
 
 void remIntAt(Vector *vector, int i) {
@@ -234,7 +234,7 @@ void shrink_to_fit(Vector *vector) {
 	vector->capacity = vector->size;
 }
 
-void clear(Vector *vector) arr_size{
+void clear(Vector *vector) {
 	int i;
 	int size;
 	if (vector->type == Vect) {
@@ -252,9 +252,10 @@ void clear(Vector *vector) arr_size{
 }
 
 int empty(Vector *vector) {
-	if (vector->size == 0)
+	if (vector->size == 0) {
 		return 1;
-	else 
+	} else {
 		return 0;
+	}
 }
 
