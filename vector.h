@@ -39,6 +39,8 @@ void remUCharAt(Vector *vector, int i);
 
 void remVectorAt(Vector *vector, int i);
 
+void shrink_to_fit(Vector *vector);
+
 
 
 

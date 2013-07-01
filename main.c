@@ -2,27 +2,30 @@
 #include <stdio.h>
 
 int main (void) {
-	Vector m_vector;
+	Vector m_vector, *mvect;
 	int i;
 
-	m_vector = *vector("int", 5);
-	addInt(&m_vector, 1);
-	addInt(&m_vector, 2);
-	addInt(&m_vector, 3);
-	addInt(&m_vector, 4);
-	addInt(&m_vector, 5);
+	m_vector = *vector("double", 5);
+	addDouble(&m_vector, 1);
+	addDouble(&m_vector, 2);
+	addDouble(&m_vector, 3);
+	addDouble(&m_vector, 4);
+	addDouble(&m_vector, 5);
 
+	mvect = cpyVector(&m_vector);
 	for (i = 0; i < m_vector.size; i++) {
-		printf("%d ", ((int *) m_vector.arr)[i]);
+		printf("%lf ", ((double *) mvect->arr)[i]);
 	}
 	printf("\nsize: %d. capacity: %d\n", m_vector.size, m_vector.capacity);
 
-	remIntAt(&m_vector, 2);
-	addInt(&m_vector, 10);
-	addInt(&m_vector, 20);
+	remDoubleAt(&m_vector, 2);
+	addDouble(&m_vector, 10);
+	addDouble(&m_vector, 20);
+
+//	shrink_to_fit(&m_vector);
 
 	for (i = 0; i < m_vector.size; i++) {
-		printf("%d ",((int *) m_vector.arr)[i]);
+		printf("%lf ",((double *) m_vector.arr)[i]);
 	}
 	printf("\nsize: %d. capacity: %d\n", m_vector.size, m_vector.capacity);
 
