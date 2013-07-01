@@ -16,7 +16,7 @@ Vector *vector(const char *type, int capacity) {
 		newVector->index = 0;
 	} else if (strcmp(type, "double") == 0) {
 		newVector->type = Double;
-		newVector->arr = (double *) calloc (capacity, sizeof(int));
+		newVector->arr = (double *) calloc (capacity, sizeof(double));
 		newVector->size_arr = capacity*sizeof(double);
 		newVector->size = 0;
 		newVector->capacity = capacity;
@@ -48,6 +48,7 @@ Vector *vector(const char *type, int capacity) {
 	}	
 	return newVector;
 }
+
 
 Vector *cpyVector(Vector *vector) {
 	int i;
