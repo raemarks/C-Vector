@@ -41,6 +41,9 @@ void remVectorAt(Vector *vector, int i);
 
 void shrink_to_fit(Vector *vector);
 
+void clear(Vector *vector);
+
+int empty(Vector *vector);
 
 
 
