@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 int main (void) {
-	Vector m_vector, *mvect, n_vect;
+	Vector m_vector, *mvect, n_vect, c_vect, vector_vect;
 	Vector v_vector;
 	int i;
 
@@ -24,23 +24,44 @@ int main (void) {
 	addDouble(&m_vector, 20);
 	printf("\n popped value: %lf\n", popDouble(&m_vector));
 
-	for (i = 0; i < m_vector.size; i++) {
-		printf("%lf ",((double *) m_vector.arr)[i]);
-	}
+	print_vector(&m_vector, ' ');
 	printf("\nsize: %d. capacity: %d\n\n\n", m_vector.size, m_vector.capacity);
 
 	v_vector = *new_vector("Vector", 3);
+	print_vector(&v_vector, ' ');
+	printf("\n\n");
 	addVector(&v_vector, *cpyVector(&m_vector));
+	print_vector(&v_vector, ' ');
+	printf("\n\n");
 	addVector(&v_vector, *cpyVector(&m_vector));
+	print_vector(&v_vector, ' ');
+	printf("\n\n");
 	addVector(&v_vector, *cpyVector(&m_vector));
+	print_vector(&v_vector, ' ');
+	printf("\n\n");
 	//n_vect = *cpyVector(popVector(&v_vector));
-	n_vect = popVector(&v_vector);
-	remVectorAt(&v_vector, 0);
+	print_vector(&v_vector, ' ');
+	printf("\n\n");
+	print_vector(&v_vector, ' ');
+	printf("\n\n");
 	
 	printf("val of array: %p\n", &n_vect);
-	for (i = 0; i < n_vect.size; i++) {
-		printf("%lf ",((double *) n_vect.arr)[i]);
-	}
+	c_vect = *cpyVector(&v_vector);
+	print_vector(&c_vect, ' ');
+	printf("\n\n");
+	
+	printf("Starting vector of vectors of doubles.\n");
+	vector_vect = *new_vector("Vector", 3);
+	addVector(&vector_vect, *cpyVector(&v_vector));
+	print_vector(&vector_vect, ' ');
+	printf("\n\n");
+	addVector(&vector_vect, *cpyVector(&v_vector));
+	print_vector(&vector_vect, ' ');
+	printf("\n\n");
+	addVector(&vector_vect, *cpyVector(&v_vector));
+	print_vector(&vector_vect, ' ');
+	printf("\n\n");
 
+	
 	return 0;
 }

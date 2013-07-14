@@ -17,6 +17,8 @@ typedef enum type {
 
 Vector *new_vector(const char *type, int capacity);
 
+void print_vector (Vector *vector, char delimeter);
+
 Vector *cpyVector(Vector *vector);
 
 //void pushBack(Vector *vector, void *val);

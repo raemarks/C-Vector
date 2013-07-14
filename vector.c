@@ -49,13 +49,39 @@ Vector *new_vector(const char *type, int capacity) {
 	return newVector;
 }
 
-/*
-   void print_vector(Vector *vector) {
-   int i;
-   for (i = 0; i < vector->size; i++) {
-   printf("
-   }
-   }*/
+
+void print_vector(Vector *vector, char delimeter) {
+	int i;
+	switch (vector->type) {
+		case Int:
+			for (i = 0; i < vector->size; i++) {
+				printf("%d%c", ((int *) vector->arr)[i], delimeter);
+			}
+			break;
+		case Double:
+			for (i = 0; i < vector->size; i++) {
+				printf("%lf%c", ((double *) vector->arr)[i], delimeter);
+			}
+			break;
+		case Char:
+			for (i = 0; i < vector->size; i++) {
+				printf("%c%c", ((char *) vector->arr)[i], delimeter);
+			}
+			break;
+		case UnsignedChar:
+			for (i = 0; i < vector->size; i++) {
+				printf("%hhu%c", ((int *) vector->arr)[i], delimeter);
+			}
+			break;
+		case Vect:
+			for (i = 0; i < vector->size; i++) {
+				print_vector(&(((Vector *) vector->arr)[i]), delimeter);
+				putchar('\n');
+			}
+			break;
+	}
+}
+
 
 Vector *cpyVector(Vector *vector) {
 	int i;
