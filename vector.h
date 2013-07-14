@@ -19,6 +19,8 @@ Vector *vector(const char *type, int capacity);
 
 Vector *cpyVector(Vector *vector);
 
+//void pushBack(Vector *vector, void *val);
+
 void addInt(Vector *vector, int n);
 
 void addDouble(Vector *vector, double d);
@@ -28,6 +30,18 @@ void addChar(Vector *vector, char c);
 void addUChar(Vector *vector, unsigned char uc);
 
 void addVector(Vector *vector, Vector m_vector);
+
+void erase(Vector *vector, int i);
+
+int popInt(Vector *vector);
+
+double popDouble(Vector *vector);
+
+char popChar(Vector *vector);
+
+unsigned char popUChar(Vector *vector);
+
+Vector popVector(Vector *vector);
 
 void remIntAt(Vector *vector, int i);
 

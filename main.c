@@ -12,17 +12,16 @@ int main (void) {
 	addDouble(&m_vector, 4);
 	addDouble(&m_vector, 5);
 
-	//mvect = cpyVector(&m_vector);
+	mvect = cpyVector(&m_vector);
 	for (i = 0; i < m_vector.size; i++) {
-		printf("%lf ", ((double *) m_vector.arr)[i]);
+		printf("%lf ", ((double *) mvect->arr)[i]);
 	}
 	printf("\nsize: %d. capacity: %d\n", m_vector.size, m_vector.capacity);
 
-	//remDoubleAt(&m_vector, 2);
+	erase(&m_vector, 2);
 	addDouble(&m_vector, 10);
 	addDouble(&m_vector, 20);
-
-//	shrink_to_fit(&m_vector);
+	printf("\n popped value: %lf\n", popDouble(&m_vector));
 
 	for (i = 0; i < m_vector.size; i++) {
 		printf("%lf ",((double *) m_vector.arr)[i]);

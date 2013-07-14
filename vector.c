@@ -86,6 +86,28 @@ Vector *cpyVector(Vector *vector) {
 	return newVector;
 }
 
+/*
+void pushBack(Vector *vector, void *val) {
+	switch(vector->type) {
+		case Int:
+			addInt(vector, *((int *) val));
+			break;
+		case Double:
+			addDouble(vector, *((double *) val));
+			break;
+		case Char: 
+			addChar(vector, *((char *) val));
+			break;
+		case UnsignedChar:
+			addUChar(vector, *((unsigned char *) val));
+			break;
+		case Vect:
+			addVector(vector, *((Vector *) val));
+			break;
+	}
+}
+*/
+
 void addInt(Vector *vector, int n) {
 	if (vector->capacity == 0) {
 		vector->arr = (int *) calloc (sizeof(int), 1);
@@ -110,7 +132,7 @@ void addInt(Vector *vector, int n) {
 void addDouble(Vector *vector, double d) {
 	int new;
 	if (vector->capacity == 0) {
-			vector->arr = (double *) calloc (sizeof(double), 1);
+		vector->arr = (double *) calloc (sizeof(double), 1);
 	}
 	if (vector->size == vector->capacity) {
 		if (vector->capacity < 4096) {
@@ -171,7 +193,6 @@ void addUChar(Vector *vector, unsigned char uc) {
 	((unsigned char *) vector->arr)[vector->index] = uc;
 	vector->index++;
 	vector->size++;
-
 }
 
 void addVector(Vector *vector, Vector m_vector) {
@@ -192,6 +213,45 @@ void addVector(Vector *vector, Vector m_vector) {
 		vector->index++;
 		vector->size++;
 	}
+}
+
+void erase(Vector *vector, int i) {
+	if (vector->type == Int) {
+		memcpy(&(((int *) vector->arr)[i]), &(((int *) vector->arr)[i + 1]), (vector->size - i - 1) * sizeof(int));
+	} else if (vector->type == Double) {
+		memcpy (&(((double *)vector->arr)[i]), &(((double *)vector->arr)[i+1]), (vector->size - i - 1) * sizeof(double));
+		vector->size--;
+		vector->index--;
+	} else if (vector->type == Char) {
+		memcpy (&(((char *)vector->arr)[i]), &(((char *)vector->arr)[i+1]), (vector->size - i - 1));
+		vector->size--;
+		vector->index--;
+	} else if (vector->type == UnsignedChar) {
+		memcpy (&(((unsigned char *)vector->arr)[i]), &(((unsigned char *)vector->arr)[i+1]), (vector->size - i - 1));
+		vector->size--;
+		vector->index--;
+	}
+}
+
+int popInt(Vector *vector) {
+	return ((int *) vector->arr)[--(vector->size)];
+}
+
+double popDouble(Vector *vector) {
+	return ((double *) vector->arr)[--(vector->size)];
+}
+
+
+char popChar(Vector *vector) {
+	return ((char *) vector->arr)[--(vector->size)];
+}
+
+unsigned char popUChar(Vector *vector) {
+	return ((unsigned char *)vector->arr)[--(vector->size)];
+}
+
+Vector popVector(Vector *vector) {
+	return ((Vector *) vector->arr)[--(vector->size)];
 }
 
 void remIntAt(Vector *vector, int i) {
