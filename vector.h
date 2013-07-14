@@ -15,7 +15,7 @@ typedef enum type {
 	Int, Double, Char, UnsignedChar, Vect
 } type;
 
-Vector *vector(const char *type, int capacity);
+Vector *new_vector(const char *type, int capacity);
 
 Vector *cpyVector(Vector *vector);
 

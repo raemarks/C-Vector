@@ -4,7 +4,7 @@
 #include <string.h>
 
 
-Vector *vector(const char *type, int capacity) {
+Vector *new_vector(const char *type, int capacity) {
 	Vector *newVector = (Vector *) calloc (1, sizeof(Vector));
 
 	if (strcmp(type, "int") == 0) {
@@ -43,12 +43,19 @@ Vector *vector(const char *type, int capacity) {
 		newVector->capacity = capacity;
 		newVector->index = 0;
 	} else {
-		printf("invalid type, vector not initialized.\n");
+		printf("invalid type, vector of \"%s\" not initialized.\n", type);
 		return NULL;
 	}	
 	return newVector;
 }
 
+/*
+   void print_vector(Vector *vector) {
+   int i;
+   for (i = 0; i < vector->size; i++) {
+   printf("
+   }
+   }*/
 
 Vector *cpyVector(Vector *vector) {
 	int i;
@@ -87,26 +94,26 @@ Vector *cpyVector(Vector *vector) {
 }
 
 /*
-void pushBack(Vector *vector, void *val) {
-	switch(vector->type) {
-		case Int:
-			addInt(vector, *((int *) val));
-			break;
-		case Double:
-			addDouble(vector, *((double *) val));
-			break;
-		case Char: 
-			addChar(vector, *((char *) val));
-			break;
-		case UnsignedChar:
-			addUChar(vector, *((unsigned char *) val));
-			break;
-		case Vect:
-			addVector(vector, *((Vector *) val));
-			break;
-	}
-}
-*/
+   void pushBack(Vector *vector, void *val) {
+   switch(vector->type) {
+   case Int:
+   addInt(vector, *((int *) val));
+   break;
+   case Double:
+   addDouble(vector, *((double *) val));
+   break;
+   case Char: 
+   addChar(vector, *((char *) val));
+   break;
+   case UnsignedChar:
+   addUChar(vector, *((unsigned char *) val));
+   break;
+   case Vect:
+   addVector(vector, *((Vector *) val));
+   break;
+   }
+   }
+   */
 
 void addInt(Vector *vector, int n) {
 	if (vector->capacity == 0) {
@@ -137,7 +144,6 @@ void addDouble(Vector *vector, double d) {
 	if (vector->size == vector->capacity) {
 		if (vector->capacity < 4096) {
 			new = vector->size_arr * 2;
-			printf("current size: %d. reallocating to: %d\n", vector->size_arr, new);
 			vector->arr = realloc (vector->arr, new);
 			vector->size_arr*=2;
 			vector->capacity*=2;
@@ -147,7 +153,6 @@ void addDouble(Vector *vector, double d) {
 			vector->capacity*=1.5;
 		}
 	}
-	printf("adding %lf\n", d);
 	((double *) vector->arr)[vector->index] = d;
 	vector->index++;
 	vector->size++;
@@ -209,27 +214,23 @@ void addVector(Vector *vector, Vector m_vector) {
 			vector->size_arr*=1.5;
 			vector->capacity*=1.5;
 		}
-		((Vector *) vector->arr)[vector->index] = m_vector;
-		vector->index++;
-		vector->size++;
 	}
+	((Vector *) vector->arr)[vector->index] = m_vector;
+	vector->index++;
+	vector->size++;
 }
 
 void erase(Vector *vector, int i) {
 	if (vector->type == Int) {
-		memcpy(&(((int *) vector->arr)[i]), &(((int *) vector->arr)[i + 1]), (vector->size - i - 1) * sizeof(int));
+		remIntAt(vector, i);
 	} else if (vector->type == Double) {
-		memcpy (&(((double *)vector->arr)[i]), &(((double *)vector->arr)[i+1]), (vector->size - i - 1) * sizeof(double));
-		vector->size--;
-		vector->index--;
+		remDoubleAt(vector, i);
 	} else if (vector->type == Char) {
-		memcpy (&(((char *)vector->arr)[i]), &(((char *)vector->arr)[i+1]), (vector->size - i - 1));
-		vector->size--;
-		vector->index--;
+		remCharAt(vector, i);
 	} else if (vector->type == UnsignedChar) {
-		memcpy (&(((unsigned char *)vector->arr)[i]), &(((unsigned char *)vector->arr)[i+1]), (vector->size - i - 1));
-		vector->size--;
-		vector->index--;
+		remUCharAt(vector, i);
+	} else if (vector->type == Vect) {
+		remVectorAt(vector, i);	
 	}
 }
 
