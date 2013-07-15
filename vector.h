@@ -11,49 +11,39 @@ typedef struct {
 } Vector;
 
 //can be a vector of ints, doubles, strings, and chars
-typedef enum type {
-	Int, Double, Char, UnsignedChar, Vect
+typedef enum {
+	INT, DOUBLE, CHAR, UNSIGNEDCHAR, VECTOR
 } type;
 
 Vector *new_vector(const char *type, int capacity);
 
 void print_vector (Vector *vector, char delimeter);
 
-Vector *cpyVector(Vector *vector);
+Vector *cpy_vector(Vector *vector);
 
 //void pushBack(Vector *vector, void *val);
 
-void addInt(Vector *vector, int n);
+void add_int(Vector *vector, int n);
 
-void addDouble(Vector *vector, double d);
+void add_double(Vector *vector, double d);
 
-void addChar(Vector *vector, char c);
+void add_char(Vector *vector, char c);
 
-void addUChar(Vector *vector, unsigned char uc);
+void add_uchar(Vector *vector, unsigned char uc);
 
-void addVector(Vector *vector, Vector m_vector);
+void add_vector(Vector *vector, Vector m_vector);
 
 void erase(Vector *vector, int i);
 
-int popInt(Vector *vector);
+int pop_int(Vector *vector);
 
-double popDouble(Vector *vector);
+double pop_double(Vector *vector);
 
-char popChar(Vector *vector);
+char pop_char(Vector *vector);
 
-unsigned char popUChar(Vector *vector);
+unsigned char pop_uchar(Vector *vector);
 
-Vector popVector(Vector *vector);
-
-void remIntAt(Vector *vector, int i);
-
-void remDoubleAt(Vector *vector, int i);
-
-void remCharAt(Vector *vector, int i);
-
-void remUCharAt(Vector *vector, int i);
-
-void remVectorAt(Vector *vector, int i);
+Vector pop_vector(Vector *vector);
 
 void shrink_to_fit(Vector *vector);
 

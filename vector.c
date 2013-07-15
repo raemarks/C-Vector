@@ -3,77 +3,86 @@
 #include <stdlib.h>
 #include <string.h>
 
+void _rem_int_at(Vector *vector, int i);
+
+void _rem_double_at(Vector *vector, int i);
+
+void _rem_char_at(Vector *vector, int i);
+
+void _rem_uchar_at(Vector *vector, int i);
+
+void _rem_vector_at(Vector *vector, int i);
 
 Vector *new_vector(const char *type, int capacity) {
-	Vector *newVector = (Vector *) calloc (1, sizeof(Vector));
+	Vector *new_vector = (Vector *) calloc (1, sizeof(Vector));
 
 	if (strcmp(type, "int") == 0) {
-		newVector->type = Int;
-		newVector->arr = (int *) calloc (capacity, sizeof(int));
-		newVector->size_arr = capacity*sizeof(int);
-		newVector->size = 0;
-		newVector->capacity = capacity;
-		newVector->index = 0;
+		new_vector->type = INT;
+		new_vector->arr = (int *) calloc (capacity, sizeof(int));
+		new_vector->size_arr = capacity*sizeof(int);
+		new_vector->size = 0;
+		new_vector->capacity = capacity;
+		new_vector->index = 0;
 	} else if (strcmp(type, "double") == 0) {
-		newVector->type = Double;
-		newVector->arr = (double *) calloc (capacity, sizeof(double));
-		newVector->size_arr = capacity*sizeof(double);
-		newVector->size = 0;
-		newVector->capacity = capacity;
-		newVector->index = 0;
+		new_vector->type = DOUBLE;
+		new_vector->arr = (double *) calloc (capacity, sizeof(double));
+		new_vector->size_arr = capacity*sizeof(double);
+		new_vector->size = 0;
+		new_vector->capacity = capacity;
+		new_vector->index = 0;
 	} else if (strcmp(type, "char") == 0) {
-		newVector->type = Char;
-		newVector->arr = (char *) calloc (capacity, 1);
-		newVector->size_arr = capacity;
-		newVector->size = 0;
-		newVector->capacity = capacity;
-		newVector->index = 0;
+		new_vector->type = CHAR;
+		new_vector->arr = (char *) calloc (capacity, 1);
+		new_vector->size_arr = capacity;
+		new_vector->size = 0;
+		new_vector->capacity = capacity;
+		new_vector->index = 0;
 	} else if (strcmp(type, "unsigned char") == 0) {
-		newVector->type = UnsignedChar;
-		newVector->arr = (unsigned char *) calloc (capacity, 1);
-		newVector->size_arr = capacity;
-		newVector->size = 0;
-		newVector->capacity = capacity;
-		newVector->index = 0;
+		new_vector->type = UNSIGNEDCHAR;
+		new_vector->arr = (unsigned char *) calloc (capacity, 1);
+		new_vector->size_arr = capacity;
+		new_vector->size = 0;
+		new_vector->capacity = capacity;
+		new_vector->index = 0;
 	} else if (strcmp(type, "Vector") == 0) { 
-		newVector->type = Vect;
-		newVector->arr = (Vector *) calloc (capacity, sizeof(Vector));
-		newVector->size_arr = capacity*sizeof(Vector);
-		newVector->size = 0;
-		newVector->capacity = capacity;
-		newVector->index = 0;
+		new_vector->type = VECTOR;
+		new_vector->arr = (Vector *) calloc (capacity, sizeof(Vector));
+		new_vector->size_arr = capacity*sizeof(Vector);
+		new_vector->size = 0;
+		new_vector->capacity = capacity;
+		new_vector->index = 0;
 	} else {
 		printf("invalid type, vector of \"%s\" not initialized.\n", type);
 		return NULL;
 	}	
-	return newVector;
+	return new_vector;
 }
 
 
 void print_vector(Vector *vector, char delimeter) {
 	int i;
 	switch (vector->type) {
-		case Int:
+		case INT:
 			for (i = 0; i < vector->size; i++) {
 				printf("%d%c", ((int *) vector->arr)[i], delimeter);
 			}
 			break;
-		case Double:
+		case DOUBLE:
 			for (i = 0; i < vector->size; i++) {
 				printf("%lf%c", ((double *) vector->arr)[i], delimeter);
 			}
 			break;
-		case Char:
+		case CHAR:
 			for (i = 0; i < vector->size; i++) {
 				printf("%c%c", ((char *) vector->arr)[i], delimeter);
 			}
 			break;
-		case UnsignedChar:
+		case UNSIGNEDCHAR:
 			for (i = 0; i < vector->size; i++) {
 				printf("%hhu%c", ((int *) vector->arr)[i], delimeter);
 			}
 			break;
-		case Vect:
+		case VECTOR:
 			for (i = 0; i < vector->size; i++) {
 				print_vector(&(((Vector *) vector->arr)[i]), delimeter);
 				putchar('\n');
@@ -83,65 +92,43 @@ void print_vector(Vector *vector, char delimeter) {
 }
 
 
-Vector *cpyVector(Vector *vector) {
+Vector *cpy_vector(Vector *vector) {
 	int i;
-	Vector *newVector = (Vector *) calloc (1, sizeof(Vector));
-	newVector->type = vector->type;
-	newVector->capacity = vector->capacity;
-	newVector->size = vector->size;
-	newVector->index = vector->index;
-	newVector->size_arr = vector->size_arr;
+	Vector *new_vector = (Vector *) calloc (1, sizeof(Vector));
+	new_vector->type = vector->type;
+	new_vector->capacity = vector->capacity;
+	new_vector->size = vector->size;
+	new_vector->index = vector->index;
+	new_vector->size_arr = vector->size_arr;
 
-	switch (newVector->type) {
-		case Int: 
-			newVector->arr = (int *) calloc (newVector->capacity, sizeof(int));
-			memcpy (newVector->arr, vector->arr, sizeof(int) * newVector->capacity);
+	switch (new_vector->type) {
+		case INT: 
+			new_vector->arr = (int *) calloc (new_vector->capacity, sizeof(int));
+			memcpy (new_vector->arr, vector->arr, sizeof(int) * new_vector->capacity);
 			break;
-		case Double: 
-			newVector->arr = (double *) calloc (newVector->capacity, sizeof(double));
-			memcpy (newVector->arr, vector->arr, sizeof(double) * newVector->capacity);
+		case DOUBLE: 
+			new_vector->arr = (double *) calloc (new_vector->capacity, sizeof(double));
+			memcpy (new_vector->arr, vector->arr, sizeof(double) * new_vector->capacity);
 			break;
-		case Char: 
-			newVector->arr = (char *) calloc (newVector->capacity, 1);
-			memcpy (newVector->arr, vector->arr, newVector->capacity);
+		case CHAR: 
+			new_vector->arr = (char *) calloc (new_vector->capacity, 1);
+			memcpy (new_vector->arr, vector->arr, new_vector->capacity);
 			break;
-		case UnsignedChar: 
-			newVector->arr = (unsigned char *) calloc (newVector->capacity, 1);
-			memcpy (newVector->arr, vector->arr, newVector->capacity);
+		case UNSIGNEDCHAR: 
+			new_vector->arr = (unsigned char *) calloc (new_vector->capacity, 1);
+			memcpy (new_vector->arr, vector->arr, new_vector->capacity);
 			break;
-		case Vect: 
-			newVector->arr = (Vector *) calloc (newVector->capacity, sizeof(Vector));
-			for (i = 0; i <newVector->capacity; i++) {
-				((Vector *) (newVector->arr))[i] = *cpyVector(&((Vector *) (vector->arr))[i]);
+		case VECTOR: 
+			new_vector->arr = (Vector *) calloc (new_vector->capacity, sizeof(Vector));
+			for (i = 0; i <new_vector->capacity; i++) {
+				((Vector *) (new_vector->arr))[i] = *cpy_vector(&((Vector *) (vector->arr))[i]);
 			}
 			break;
 	}
-	return newVector;
+	return new_vector;
 }
 
-/*
-   void pushBack(Vector *vector, void *val) {
-   switch(vector->type) {
-   case Int:
-   addInt(vector, *((int *) val));
-   break;
-   case Double:
-   addDouble(vector, *((double *) val));
-   break;
-   case Char: 
-   addChar(vector, *((char *) val));
-   break;
-   case UnsignedChar:
-   addUChar(vector, *((unsigned char *) val));
-   break;
-   case Vect:
-   addVector(vector, *((Vector *) val));
-   break;
-   }
-   }
-   */
-
-void addInt(Vector *vector, int n) {
+void add_int(Vector *vector, int n) {
 	if (vector->capacity == 0) {
 		vector->arr = (int *) calloc (sizeof(int), 1);
 	}
@@ -162,7 +149,7 @@ void addInt(Vector *vector, int n) {
 	vector->size++;
 }
 
-void addDouble(Vector *vector, double d) {
+void add_double(Vector *vector, double d) {
 	int new;
 	if (vector->capacity == 0) {
 		vector->arr = (double *) calloc (sizeof(double), 1);
@@ -185,7 +172,7 @@ void addDouble(Vector *vector, double d) {
 
 }
 
-void addChar(Vector *vector, char c) {
+void add_char(Vector *vector, char c) {
 	if (vector->capacity == 0) {
 		vector->arr = (char *) calloc (1, 1);
 	}
@@ -206,7 +193,7 @@ void addChar(Vector *vector, char c) {
 	vector->size++;
 }
 
-void addUChar(Vector *vector, unsigned char uc) {
+void add_uchar(Vector *vector, unsigned char uc) {
 	if (vector->capacity == 0) {
 		vector->arr = (unsigned char *) calloc (1, 1);
 	}
@@ -226,7 +213,7 @@ void addUChar(Vector *vector, unsigned char uc) {
 	vector->size++;
 }
 
-void addVector(Vector *vector, Vector m_vector) {
+void add_vector(Vector *vector, Vector m_vector) {
 	if (vector->capacity == 0) {
 		vector->arr = (Vector *) calloc (sizeof(Vector), 1);
 	}
@@ -247,70 +234,38 @@ void addVector(Vector *vector, Vector m_vector) {
 }
 
 void erase(Vector *vector, int i) {
-	if (vector->type == Int) {
-		remIntAt(vector, i);
-	} else if (vector->type == Double) {
-		remDoubleAt(vector, i);
-	} else if (vector->type == Char) {
-		remCharAt(vector, i);
-	} else if (vector->type == UnsignedChar) {
-		remUCharAt(vector, i);
-	} else if (vector->type == Vect) {
-		remVectorAt(vector, i);	
+	if (vector->type == INT) {
+		_rem_int_at(vector, i);
+	} else if (vector->type == DOUBLE) {
+		_rem_double_at(vector, i);
+	} else if (vector->type == CHAR) {
+		_rem_char_at(vector, i);
+	} else if (vector->type == UNSIGNEDCHAR) {
+		_rem_uchar_at(vector, i);
+	} else if (vector->type == VECTOR) {
+		_rem_vector_at(vector, i);	
 	}
 }
 
-int popInt(Vector *vector) {
+int pop_int(Vector *vector) {
 	return ((int *) vector->arr)[--(vector->size)];
 }
 
-double popDouble(Vector *vector) {
+double pop_double(Vector *vector) {
 	return ((double *) vector->arr)[--(vector->size)];
 }
 
 
-char popChar(Vector *vector) {
+char pop_char(Vector *vector) {
 	return ((char *) vector->arr)[--(vector->size)];
 }
 
-unsigned char popUChar(Vector *vector) {
+unsigned char pop_uchar(Vector *vector) {
 	return ((unsigned char *)vector->arr)[--(vector->size)];
 }
 
-Vector popVector(Vector *vector) {
+Vector pop_vector(Vector *vector) {
 	return ((Vector *) vector->arr)[--(vector->size)];
-}
-
-void remIntAt(Vector *vector, int i) {
-	//have to typecast everything. Just shift everything one unit to the left
-	memcpy (&(((int *)vector->arr)[i]), &(((int *)vector->arr)[i+1]), (vector->size - i - 1) * sizeof(int));
-	vector->size--;
-	vector->index--;
-}
-
-void remDoubleAt(Vector *vector, int i) {
-	memcpy (&(((double *)vector->arr)[i]), &(((double *)vector->arr)[i+1]), (vector->size - i - 1) * sizeof(double));
-	vector->size--;
-	vector->index--;
-}
-
-void remCharAt(Vector *vector, int i) {
-	memcpy (&(((char *)vector->arr)[i]), &(((char *)vector->arr)[i+1]), (vector->size - i - 1));
-	vector->size--;
-	vector->index--;
-}
-
-void remUCharAt(Vector *vector, int i) {
-	memcpy (&(((unsigned char *)vector->arr)[i]), &(((unsigned char *)vector->arr)[i+1]), (vector->size - i - 1));
-	vector->size--;
-	vector->index--;
-}
-
-void remVectorAt(Vector *vector, int i) {
-	free(((Vector *) vector->arr)[i].arr);
-	memcpy (&(((Vector *)vector->arr)[i]), &(((Vector *)vector->arr)[i+1]), (vector->size - i - 1) * sizeof(Vector));
-	vector->size--;
-	vector->index--;
 }
 
 void shrink_to_fit(Vector *vector) {
@@ -323,10 +278,10 @@ void shrink_to_fit(Vector *vector) {
 void clear(Vector *vector) {
 	int i;
 	int size;
-	if (vector->type == Vect) {
+	if (vector->type == VECTOR) {
 		size = vector->size;
 		for (i = size - 1; i >= 0; i--) {
-			remVectorAt(vector, i);
+			_rem_vector_at(vector, i);
 		}
 	}
 	free(vector->arr);
@@ -344,4 +299,37 @@ int empty(Vector *vector) {
 		return 0;
 	}
 }
+
+void _rem_int_at(Vector *vector, int i) {
+	//have to typecast everything. Just shift everything one unit to the left
+	memcpy (&(((int *)vector->arr)[i]), &(((int *)vector->arr)[i+1]), (vector->size - i - 1) * sizeof(int));
+	vector->size--;
+	vector->index--;
+}
+
+void _rem_double_at(Vector *vector, int i) {
+	memcpy (&(((double *)vector->arr)[i]), &(((double *)vector->arr)[i+1]), (vector->size - i - 1) * sizeof(double));
+	vector->size--;
+	vector->index--;
+}
+
+void _rem_char_at(Vector *vector, int i) {
+	memcpy (&(((char *)vector->arr)[i]), &(((char *)vector->arr)[i+1]), (vector->size - i - 1));
+	vector->size--;
+	vector->index--;
+}
+
+void _rem_uchar_at(Vector *vector, int i) {
+	memcpy (&(((unsigned char *)vector->arr)[i]), &(((unsigned char *)vector->arr)[i+1]), (vector->size - i - 1));
+	vector->size--;
+	vector->index--;
+}
+
+void _rem_vector_at(Vector *vector, int i) {
+	free(((Vector *) vector->arr)[i].arr);
+	memcpy (&(((Vector *)vector->arr)[i]), &(((Vector *)vector->arr)[i+1]), (vector->size - i - 1) * sizeof(Vector));
+	vector->size--;
+	vector->index--;
+}
+
 
