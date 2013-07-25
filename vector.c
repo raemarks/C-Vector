@@ -381,11 +381,12 @@ Vector pop_vector(Vector *vector) {
 }
 
 void resize(Vector *vector, int size) {
-	if (vector->size > size || size < 0) {
+	int data_size;
+	if (vector->size > size) {
 		printf("invalid new size.\n");
 		return;
 	}
-	int data_size = vector->size_arr / vector->capacity;
+	data_size = vector->size_arr / vector->capacity;
 	vector->size_arr = data_size * size;
 	vector->arr = (void *) realloc(vector->arr, vector->size_arr);
 	vector->capacity = size;
