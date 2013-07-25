@@ -7,7 +7,6 @@ typedef struct {
 	int capacity;
 	int size_arr; //size of memory block
 	int size; //how many elements
-	int index; //how many elements it can hold
 } Vector;
 
 //can be a vector of ints, doubles, strings, and chars
@@ -23,15 +22,25 @@ Vector *cpy_vector(Vector *vector);
 
 //void pushBack(Vector *vector, void *val);
 
-void add_int(Vector *vector, int n);
+void push_int(Vector *vector, int n);
 
-void add_double(Vector *vector, double d);
+void push_double(Vector *vector, double d);
 
-void add_char(Vector *vector, char c);
+void push_char(Vector *vector, char c);
 
-void add_uchar(Vector *vector, unsigned char uc);
+void push_uchar(Vector *vector, unsigned char uc);
 
-void add_vector(Vector *vector, Vector m_vector);
+void push_vector(Vector *vector, Vector m_vector);
+
+void insert_int(Vector *vector, int n, int i);
+
+void insert_double(Vector *vector, double d, int i);
+
+void insert_char(Vector *vector, char c, int i);
+
+void insert_uchar(Vector *vector, unsigned char uc, int i);
+
+void insert_vector(Vector *vector, Vector vect, int i);
 
 void erase(Vector *vector, int i);
 
@@ -44,6 +53,8 @@ char pop_char(Vector *vector);
 unsigned char pop_uchar(Vector *vector);
 
 Vector pop_vector(Vector *vector);
+
+void resize(Vector *vector, int size);
 
 void shrink_to_fit(Vector *vector);
 
